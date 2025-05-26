@@ -100,7 +100,7 @@ jobs:
 
     - name: Start interactive SSH mode
       if: ${{ github.event.inputs.ssh == 'true' }}
-      run: sleep 3600  # 给你 1 小时的 SSH 连接时间
+      run: sleep 1200  # 给你 1 小时的 SSH 连接时间
 
       
     - name: Load custom configuration
