@@ -73,7 +73,7 @@ jobs:
         df -hT $PWD
         git clone $REPO_URL -b $REPO_BRANCH openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
-
+    
     - name: Load custom feeds
       run: |
         [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
@@ -86,7 +86,23 @@ jobs:
 
     - name: Install feeds
       run: cd openwrt && ./scripts/feeds install -a
+      
+    - name: Set up SSH (for debug)
+      if: ${{ github.event.inputs.ssh == 'true' }}
+      uses: P3TERX/debugger-action@v1
+      with:
+        ssh_password: root
 
+    - name: Show environment info
+      run: |
+        uname -a
+        free -h
+
+    - name: Start interactive SSH mode
+      if: ${{ github.event.inputs.ssh == 'true' }}
+      run: sleep 3600  # 给你 1 小时的 SSH 连接时间
+
+      
     - name: Load custom configuration
       run: |
         [ -e files ] && mv files openwrt/files
