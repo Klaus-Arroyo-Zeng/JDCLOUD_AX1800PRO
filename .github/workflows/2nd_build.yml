@@ -74,7 +74,7 @@ jobs:
 
     - name: Start interactive SSH mode
       if: ${{ github.event.inputs.ssh == 'true' }}
-      run: sleep 600  # 给你 10分钟的 SSH 连接时间
+      run: sleep 600  # 给你 1 小时的 SSH 连接时间
 
     - name: Download package
       id: package
