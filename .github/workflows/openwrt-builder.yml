@@ -20,6 +20,8 @@ on:
           description: "Enable SSH debugging"
           required: false
           default: "false"
+permissions:
+  contents: write
 
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
@@ -38,6 +40,16 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
+    - name: Free up disk space
+      run: |
+        echo "Before cleanup:"
+        df -h
+        sudo rm -rf /usr/share/dotnet
+        sudo rm -rf /opt/ghc
+        sudo rm -rf /usr/local/share/boost
+        sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+        echo "After cleanup:"
+        df -h
     - name: Checkout
       uses: actions/checkout@main
 
